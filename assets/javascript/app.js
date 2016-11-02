@@ -1,3 +1,5 @@
+$(document).ready(function () {
+
 
 var counter;
 
@@ -38,45 +40,34 @@ var clock = {
 };
 
 window.onload = function(){
-	$('#start').on('click', clock.start);
+	$('#start').on('click', clock.start)
 
 };
 /////////////////////////////////////////////////////////////////////////////////////////
 
 //trivia object 
-//functiom 
-var trivia = { 
+//function
 
-quizQuestions: function (question, choices, correctAnswer){
+function quizQuestion(question, choices, correctAnswer){
 		//THIS refers to the parameters that are being used
-		this.question =	question,
-		this.choices = choices, 
-		this.correctAnswer = correctAnswer,
-	
-	//array that calls on each new question 
-	[
-	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0),
-	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0),
-	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0),
-	];
-
-	$('#question').html(parseInt(
-	console.log("adsfasdfds"); 
-}
-},
-
-
-window.onload = function(){
-	$('#start').on('click',  
-
+		this.question =	question;
+		this.choices = choices;
+		this.correctAnswer = correctAnswer;
 	}
 
-	/*
-	var options = quizQuestions.choices;
-	var formHtml = ' ';
-		for (var i = 0; i < options.length; i++){
-			formHtml += '<div><input type = "radio" name = "option" value="' + i + '" id="option' + i + '">
-			<label for = "option' + i + '">' + quizQuestions.choices[i] + '</label></div><br/>';
-		}
- 	*/
+		//might possibly create array 
+		//all questions go here and then are parsed out .html too html page
+	var questionsArray = [
+	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0),
+	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0),
+	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0),
+	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0),
+	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0)
+	];
 
+	for (i = 0; i < questionsArray.length; i++){
+	console.log(questionsArray[0].question)}
+
+
+})
+	
