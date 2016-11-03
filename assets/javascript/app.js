@@ -39,10 +39,7 @@ var clock = {
 
 };
 
-window.onload = function(){
-	$('#start').on('click', clock.start)
 
-};
 /////////////////////////////////////////////////////////////////////////////////////////
 
 //trivia object 
@@ -68,11 +65,15 @@ function quizQuestion(question, choices, correctAnswer){
 	var $question = $('#question');
 	var $choices = $('#choices');
 
+	
+	var questionTracker = 0;
 
-	//displays the questions and choices with radio inputs
-	function displayGame (){
-		$('#question').html(parseInt(questionsArray[0]) + 1 + ". " + questionsArray[0].question);
-	var options = questionsArray[0].choices;
+
+	//displays the questions and choices with radio inputs 
+	//activated when start button is pressed
+	$('#start').click(function displayGame (){
+		$('#question').html(parseInt(questionsArray[questionTracker]) + 1 + ". " + questionsArray[questionTracker].question);
+	var options = questionsArray[questionTracker].choices;
 	var formHtml = ' ';
 		 for (var i = 0; i < options.length; i++) {
     formHtml += '<div><input type="radio" name="option" value="' + i + '" id="option' + i + '"><label for="option' + i + '">' +
@@ -80,14 +81,41 @@ function quizQuestion(question, choices, correctAnswer){
   }
   	$('#form').html(formHtml);
   $("#option0").prop('checked', true);
-	};
+	});
 
+
+	var correctAnswers = 0;
+	var wrongAnswers = 0;
+//checks user input to see if they selected the right or wrong answer
 	function checkAns() {
   if ($("input[name=option]:checked").val() == questionsArray[0].correctAnswer) {
-    correctAnswers++;
+    correctAnswers ++; }
+  else if ($("input[name=option]:checked").val() != questionsArray[0].correctAnswer) {
+  	wrongAnswers ++; }
   };
-};
 
+
+	$('#submit').click(function(){
+		checkAns();
+		questionTracker++;
+
+    console.log(correctAnswers);
+    console.log(wrongAnswers);
+
+	});
+
+
+
+
+
+	
+window.onload = function(){
+	//start button displays and activates timer and displays all the questions/answers
+	$('#start').on('click', clock.start);
+	$('#start').on('click', displayGame());
+	
+
+};
 
 
 
