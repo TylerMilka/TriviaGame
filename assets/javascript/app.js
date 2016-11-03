@@ -65,9 +65,39 @@ function quizQuestion(question, choices, correctAnswer){
 	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0)
 	];
 
-	for (i = 0; i < questionsArray.length; i++){
-	console.log(questionsArray[0].question)}
+	var $question = $('#question');
+	var $choices = $('#choices');
+
+
+	//displays the questions and choices with radio inputs
+	function displayGame (){
+		$('#question').html(parseInt(questionsArray[0]) + 1 + ". " + questionsArray[0].question);
+	var options = questionsArray[0].choices;
+	var formHtml = ' ';
+		 for (var i = 0; i < options.length; i++) {
+    formHtml += '<div><input type="radio" name="option" value="' + i + '" id="option' + i + '"><label for="option' + i + '">' +
+      questionsArray[0].choices[i] + '</label></div><br/>';
+  }
+  	$('#form').html(formHtml);
+  $("#option0").prop('checked', true);
+	};
+
+	function checkAns() {
+  if ($("input[name=option]:checked").val() == questionsArray[0].correctAnswer) {
+    correctAnswers++;
+  };
+};
+
+
 
 
 })
+
+
+
+//	$choices.html(questionsArray[i++].choices);
+
+
+
+
 	
