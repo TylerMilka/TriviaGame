@@ -1,4 +1,4 @@
-$(document).ready(function () {
+
 
 
 var counter;
@@ -39,6 +39,11 @@ var clock = {
 
 };
 
+function gameOver(){
+	if (clock.timer === 27){
+		alert("gameOver")
+	}
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -55,71 +60,105 @@ function quizQuestion(question, choices, correctAnswer){
 		//might possibly create array 
 		//all questions go here and then are parsed out .html too html page
 	var questionsArray = [
-	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0),
-	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0),
-	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0),
-	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0),
-	new quizQuestion('what is the name of this city', ['Chicago', 'Utah', 'Detroit', 'Phoenix'], 0)
+	new quizQuestion('Prior to 2016, when was the last time the Cubs won the World Series?', ['1908', '1904', '1923', '2007'], 0),
+	new quizQuestion('Who are the current owners of the Chicago Cubs', ['The Murhpy\'s', 'The Rickets', 'Sammy Sosa', 'Micael Jordan'], 1),
+	new quizQuestion('What happens if the ball gets stuck in the ivy growing along the outfield fence?', ['In the park Home Run', 'Ground Rule Double', 'Everybody gets a free beer', 'Batter is out'], 1),
+	new quizQuestion('What direction does the homeplate point towards?', ['NorthEast', 'SouthWest', 'NorthEast', 'NorthWest'], 1),
+	new quizQuestion('What does the W on their flag stand for?', ['Windy', 'Watch', 'Win', 'Weee'], 2),
+	new quizQuestion('How many all star games were played at Wrigley Field?', ['3', '4', '2', '5'], 0),
+	new quizQuestion('Who was the last Cub to win an MVP award?', ['Ernie Banks', 'Derrick Lee', 'Ken Hubbs', 'Sammy Sosa'], 3),
 	];
 
 	var $question = $('#question');
 	var $choices = $('#choices');
-
+	var currentQuestion = 0;
 	
-	var questionTracker = 0;
+
 
 
 	//displays the questions and choices with radio inputs 
-	//activated when start button is pressed
-	$('#start').click(function displayGame (){
-		$('#question').html(parseInt(questionsArray[questionTracker]) + 1 + ". " + questionsArray[questionTracker].question);
-	var options = questionsArray[questionTracker].choices;
+	//activated when start button is
+	function displayGame(){
+
+		for (var i = 0; i < questionsArray.length; i++){
+		$('#question').html(parseInt(currentQuestion) + 1 + ". " + questionsArray[currentQuestion].question);
+	};
+	var options = questionsArray[currentQuestion].choices;
 	var formHtml = ' ';
 		 for (var i = 0; i < options.length; i++) {
     formHtml += '<div><input type="radio" name="option" value="' + i + '" id="option' + i + '"><label for="option' + i + '">' +
-      questionsArray[0].choices[i] + '</label></div><br/>';
-  }
-  	$('#form').html(formHtml);
-  $("#option0").prop('checked', true);
-	});
+      questionsArray[currentQuestion].choices[i] + '</label></div><br/>';
+ 	 }
 
+  		$('#form').html(formHtml);
+  		$("#option0").prop('checked', true);
+	};
 
+	
 	var correctAnswers = 0;
-	var wrongAnswers = 0;
+	
 //checks user input to see if they selected the right or wrong answer
 	function checkAns() {
-  if ($("input[name=option]:checked").val() == questionsArray[0].correctAnswer) {
-    correctAnswers ++; }
-  else if ($("input[name=option]:checked").val() != questionsArray[0].correctAnswer) {
-  	wrongAnswers ++; }
-  };
+  if ($("input[name=option]:checked").val() == questionsArray[currentQuestion].correctAnswer) {
+    correctAnswers ++; 
+	}
+}
+
+   	$(document).ready(function(){
+   			
+  	var $start= $('#start');
+  	var $question= $('#question');
+  	var $h3 =  $('#h3');
+  	var $submit = $('#submit');
+  	var $score = $('#score');
+
+   		$question.hide();
+  		$h3.hide();
+  		$submit.hide();
+  		$score.hide();
+
+
+  	$('#start').click(function(){
+
+  		clock.start();
+  		displayGame();
+  		$h3.fadeIn();
+  		$question.fadeIn();
+  		$submit.fadeIn(1500);
+  	});
+
+
 
 
 	$('#submit').click(function(){
+		event.preventDefault();
 		checkAns();
-		questionTracker++;
+		currentQuestion++;
+		if (currentQuestion < questionsArray.length){
+			
+			displayGame();
+		}
+		if (currentQuestion === questionsArray.length){
+
+			$score.fadeIn(1500).html("You answered" + correctAnswers + "correctly")
+			
+		}
 
     console.log(correctAnswers);
-    console.log(wrongAnswers);
+
 
 	});
 
-
+});	
 
 
 
 	
-window.onload = function(){
-	//start button displays and activates timer and displays all the questions/answers
-	$('#start').on('click', clock.start);
-	$('#start').on('click', displayGame());
-	
-
-};
 
 
 
-})
+
+
 
 
 
