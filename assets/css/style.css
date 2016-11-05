@@ -1,0 +1,16 @@
+
+
+body {
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	background-image: url("cubs.jpg");
+	font: Georgia,'Droid Serif',serif;
+
+}
+
+
+#score {
+	font-size: 30px;
+}

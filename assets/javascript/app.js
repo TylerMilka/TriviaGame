@@ -23,6 +23,7 @@ var clock = {
 		counter= setInterval(clock.count,1000);
 	},
 
+
   timeConverter: function(t){
         var minutes = Math.floor(t/60);
         var seconds = t - (minutes * 60);
@@ -35,7 +36,12 @@ var clock = {
             minutes = "0" + minutes;
         }
         return minutes + ":" + seconds;
-    }
+    },
+
+    //function that stops the clock from counting down
+    stop: function(){
+    	clearInterval(counter);
+    },
 
 };
 
@@ -69,6 +75,7 @@ function quizQuestion(question, choices, correctAnswer){
 	new quizQuestion('Who was the last Cub to win an MVP award?', ['Ernie Banks', 'Derrick Lee', 'Ken Hubbs', 'Sammy Sosa'], 3),
 	];
 
+	//setting various variables
 	var $question = $('#question');
 	var $choices = $('#choices');
 	var currentQuestion = 0;
@@ -80,6 +87,8 @@ function quizQuestion(question, choices, correctAnswer){
 	//activated when start button is
 	function displayGame(){
 
+		//for loop that runs through the array, the other for loop runs through the options array
+		//they are then added to the dom when the function is activated
 		for (var i = 0; i < questionsArray.length; i++){
 		$('#question').html(parseInt(currentQuestion) + 1 + ". " + questionsArray[currentQuestion].question);
 	};
@@ -94,7 +103,7 @@ function quizQuestion(question, choices, correctAnswer){
   		$("#option0").prop('checked', true);
 	};
 
-	
+
 	var correctAnswers = 0;
 	
 //checks user input to see if they selected the right or wrong answer
@@ -111,17 +120,21 @@ function quizQuestion(question, choices, correctAnswer){
   	var $h3 =  $('#h3');
   	var $submit = $('#submit');
   	var $score = $('#score');
+  	var $timeremaining = $('#timeremaining');
 
-   		$question.hide();
+   		$question.hide(); //hides certain dom elements until the the start button is pressed
   		$h3.hide();
   		$submit.hide();
   		$score.hide();
+  		$timeremaining.hide();
+
 
 
   	$('#start').click(function(){
 
-  		clock.start();
-  		displayGame();
+  		clock.start();	//starts timer function
+  		displayGame();	//activate the displayGame function
+  		$timeremaining.fadeIn(); //displays other dom elements
   		$h3.fadeIn();
   		$question.fadeIn();
   		$submit.fadeIn(1500);
@@ -130,18 +143,18 @@ function quizQuestion(question, choices, correctAnswer){
 
 
 
-	$('#submit').click(function(){
-		event.preventDefault();
-		checkAns();
+	$('#submit').click(function(){		//activated function when submit button is pressed
+		event.preventDefault();			
+		checkAns();						//activates checkAns() function
 		currentQuestion++;
 		if (currentQuestion < questionsArray.length){
 			
 			displayGame();
 		}
-		if (currentQuestion === questionsArray.length){
+		if (currentQuestion === questionsArray.length-1){
 
-			$score.fadeIn(1500).html("You answered" + correctAnswers + "correctly")
-			
+			$score.fadeIn(1500).html("You answered " + correctAnswers + " correctly" + "<br>" + "CONGRATULATIONS 2016 CUBS") ;
+			clock.stop();
 		}
 
     console.log(correctAnswers);
