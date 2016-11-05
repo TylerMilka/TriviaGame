@@ -106,12 +106,15 @@ function quizQuestion(question, choices, correctAnswer){
 
 	var correctAnswers = 0;
 	
-//checks user input to see if they selected the right or wrong answer
-	function checkAns() {
+//checks user input to see if they selected the right or wrong answer based on the correct answer of the question
+	function checkAns() {  
   if ($("input[name=option]:checked").val() == questionsArray[currentQuestion].correctAnswer) {
     correctAnswers ++; 
 	}
 }
+
+
+
 
    	$(document).ready(function(){
    			
@@ -121,12 +124,19 @@ function quizQuestion(question, choices, correctAnswer){
   	var $submit = $('#submit');
   	var $score = $('#score');
   	var $timeremaining = $('#timeremaining');
+  	var $playAgain= $('#playagain');
 
    		$question.hide(); //hides certain dom elements until the the start button is pressed
   		$h3.hide();
   		$submit.hide();
   		$score.hide();
   		$timeremaining.hide();
+  		$playAgain.hide();
+
+  	$('#playagain').click(function(){
+		window.location.reload()
+	});
+
 
 
 
@@ -134,7 +144,7 @@ function quizQuestion(question, choices, correctAnswer){
 
   		clock.start();	//starts timer function
   		displayGame();	//activate the displayGame function
-  		$timeremaining.fadeIn(); //displays other dom elements
+  		$timeremaining.fadeIn(); //displays other dom elements that fade in
   		$h3.fadeIn();
   		$question.fadeIn();
   		$submit.fadeIn(1500);
@@ -146,16 +156,20 @@ function quizQuestion(question, choices, correctAnswer){
 	$('#submit').click(function(){		//activated function when submit button is pressed
 		event.preventDefault();			
 		checkAns();						//activates checkAns() function
-		currentQuestion++;
-		if (currentQuestion < questionsArray.length){
+		currentQuestion++;				//updates the displayGame() function with the next question from array
+		if (currentQuestion < questionsArray.length){  //runs the displayGame() over 
 			
 			displayGame();
 		}
-		if (currentQuestion === questionsArray.length-1){
+		if (currentQuestion === questionsArray.length-1){  //displays score once the last question is answered
 
-			$score.fadeIn(1500).html("You answered " + correctAnswers + " correctly" + "<br>" + "CONGRATULATIONS 2016 CUBS") ;
+			$score.fadeIn(1500).html("You answered " + correctAnswers + " correctly" + "<br>" + "CONGRATULATIONS 2016 CUBS!!!") ;
 			clock.stop();
-		}
+			$playAgain.fadeIn();
+			}
+
+
+	
 
     console.log(correctAnswers);
 
@@ -174,8 +188,6 @@ function quizQuestion(question, choices, correctAnswer){
 
 
 
-
-//	$choices.html(questionsArray[i++].choices);
 
 
 
