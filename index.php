@@ -1,1 +1,1 @@
-<?php include_once ("CubsTrivia.html"); ?>
+<?php include_once ("TriviaGame.html"); ?>
